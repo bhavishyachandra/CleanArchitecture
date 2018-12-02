@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Core.SharedKernel;
+﻿using CleanArchitecture.Core.Events;
+using CleanArchitecture.Core.SharedKernel;
 using System;
 using System.Collections.Generic;
 
@@ -8,6 +9,11 @@ namespace CleanArchitecture.Core.Entities
     {
         public string Name { get; set; }
         public List<GuestBookEntry> Entries { get; } = new List<GuestBookEntry>();
+        public void AddEntry(GuestBookEntry entry)
+        {
+            Entries.Add(entry);
+            Events.Add(new EntryAddedEvent(Id, entry));
+        }
     }
 
     public class GuestBookEntry : BaseEntity
