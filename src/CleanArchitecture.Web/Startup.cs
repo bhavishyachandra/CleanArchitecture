@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CleanArchitecture.Core.Services;
 using CleanArchitecture.Core.SharedKernel;
 using CleanArchitecture.Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
@@ -63,6 +64,7 @@ namespace CleanArchitecture.Web
             Assembly coreAssembly = Assembly.GetAssembly(typeof(BaseEntity));
             Assembly infrastructureAssembly = Assembly.GetAssembly(typeof(EfRepository)); // TODO: Move to Infrastucture Registry
             builder.RegisterAssemblyTypes(webAssembly, coreAssembly, infrastructureAssembly).AsImplementedInterfaces();
+            builder.RegisterType<MessageSender>();
 
             IContainer applicationContainer = builder.Build();
             return new AutofacServiceProvider(applicationContainer);

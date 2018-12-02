@@ -10,10 +10,12 @@ namespace CleanArchitecture.Web.Controllers
     public class HomeController : Controller
     {
         private IRepository _repository;
+        private readonly IMessageSender messageSender;
 
-        public HomeController(IRepository repository)
+        public HomeController(IRepository repository, IMessageSender messageSender)
         {
             _repository = repository;
+            this.messageSender = messageSender;
         }
 
         public IActionResult Index()
@@ -69,6 +71,10 @@ namespace CleanArchitecture.Web.Controllers
                 var guestBookEntries = _repository.List<GuestBookEntry>();
                 guestBook.Entries.Clear();
                 guestBook.Entries.AddRange(guestBookEntries);
+                foreach (var entry in guestBook.Entries)
+                {
+                    messageSender.SendGuestBookNotificationEmail(entry.EmailAddress, entry.Message);
+                }
                 guestBook.Entries.Add(model.NewEntry);
                 _repository.Update(guestBook);
 
