@@ -12,6 +12,8 @@ namespace CleanArchitecture.Tests.Integration.Web
 {
     public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
     {
+        // TODO: use actual DomainEventDispatcher and get messageSender to send email
+        // TODO: mock messageSender to check method invocation, not rely on smtp
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
