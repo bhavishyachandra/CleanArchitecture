@@ -24,6 +24,22 @@ namespace CleanArchitecture.Web
                 Description = "Test Description Two"
             });
             dbContext.SaveChanges();
+
+            var guestBook = new GuestBook()
+            {
+                Name = "Test Guestbook",
+                Id = 1
+            };
+
+            dbContext.GuestBooks.Add(guestBook);
+
+            guestBook.Entries.Add(new GuestBookEntry()
+            {
+                EmailAddress = "test@test.com",
+                Message = "test message"
+            });
+
+            dbContext.SaveChanges();
         }
 
     }
